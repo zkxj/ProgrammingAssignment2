@@ -19,7 +19,7 @@ makeCacheMatrix <- function(x = matrix()) {
   mInverse <- NULL
   
   ## Set the new "straight" matrix value
-  set <- function(mStraight) {
+  setStraight <- function(mStraight) {
     x <<- mStraight         ## Set the new straight matrix value
     
     ## Since a new straight matrix was created, clear the cached 
@@ -27,7 +27,7 @@ makeCacheMatrix <- function(x = matrix()) {
     mInverse <<- NULL
   }
   
-  get <- function() x     ## Retrieve straight matrix values
+  getStraight <- function() x     ## Retrieve straight matrix values
   
   ## Create the inverse value
   setInverse <- function(invert) mInverse <<- invert
@@ -36,8 +36,8 @@ makeCacheMatrix <- function(x = matrix()) {
   getInverse <- function() mInverse
   
   ## Return a list of functions available for our custom Matrix object
-  list(set = set, get = get, setInverse = setInverse,
-       getInverse = getInverse)
+  list(setStraight = setStraight, getStraight = getStraight,
+       setInverse = setInverse, getInverse = getInverse)
 }
 
 
@@ -58,7 +58,7 @@ cacheSolve <- function(x, ...) {
     message("Inverse already computed. Returning cached value")
     return(mInverse) ## Return the cached value
   } else {    ## If the cached value IS null
-    mStraight <- x$get()    ## Get the stright matrix value
+    mStraight <- x$getStraight()    ## Get the straight matrix value
     mInverse <- solve(mStraight, ...) ## Compute inverse of the matrix
     
     ## Set the cached inverse value for future use
